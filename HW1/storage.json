@@ -1,0 +1,9 @@
+{
+  "auditorium:4186": {
+    "id": 4186,
+    "name": "Title_4186",
+    "number_of_seats": 50,
+    "vip_seats": [2,5,6,45]
+  }
+
+}
