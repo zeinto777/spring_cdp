@@ -41,4 +41,29 @@ public class Ticket {
     public List<Long> getSeats() {
         return seats;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Ticket)) return false;
+
+        Ticket ticket = (Ticket) o;
+
+        if (id != ticket.id) return false;
+        if (userId != ticket.userId) return false;
+        if (eventId != ticket.eventId) return false;
+        if (date != null ? !date.equals(ticket.date) : ticket.date != null) return false;
+        return !(seats != null ? !seats.equals(ticket.seats) : ticket.seats != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (int) (userId ^ (userId >>> 32));
+        result = 31 * result + (int) (eventId ^ (eventId >>> 32));
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (seats != null ? seats.hashCode() : 0);
+        return result;
+    }
 }

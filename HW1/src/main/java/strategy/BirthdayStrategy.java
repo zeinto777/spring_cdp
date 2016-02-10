@@ -12,13 +12,10 @@ import java.util.List;
 /**
  * Created by Andrii_Pinchuk on 2/7/2016.
  */
-public class BirthdayStrategy implements DiscountStrategy {
-    private int DISCOUNT_FOR_BIRTHDAY = 5;
-
+public class BirthdayStrategy extends DiscountStrategy {
     @Override
     public int execute(User user, List<Ticket> tickets) {
-        return (checkForBirthdayDay(user)) ? DISCOUNT_FOR_BIRTHDAY : 0;
-
+        return (checkForBirthdayDay(user)) ? discount : 0;
     }
 
     private boolean checkForBirthdayDay(User user) {

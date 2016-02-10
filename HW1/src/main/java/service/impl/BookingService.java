@@ -24,7 +24,7 @@ public class BookingService implements IBookingService {
     private IEventService eventService;
     @Autowired
     private IAuditoriumService auditoriumService;
-    @Autowired @Qualifier("discountService")
+    @Autowired
     private IDiscountService discountService;
     @Autowired
     private IBookingDAO bookingDAO;
@@ -40,7 +40,8 @@ public class BookingService implements IBookingService {
         Event event = eventService.getById(eventId);
         Auditorium auditorium = auditoriumService.getById(auditoriumId);
         int discount = discountService.getDiscount(user, getTicketsByUserId(userId));
-        return bookingDAO.getTicketPrice(auditorium, event, dateTime, seats, user) * ((100 - discount) / 100);
+        float d = (100f - discount) / 100;
+        return (long) (bookingDAO.getTicketPrice(auditorium, event, dateTime, seats, user) * d);
     }
 
     @Override

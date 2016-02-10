@@ -9,7 +9,12 @@ import java.util.List;
 /**
  * Created by Andrii_Pinchuk on 2/7/2016.
  */
-public interface DiscountStrategy {
+public abstract class DiscountStrategy {
+    protected int discount;
 
-    int execute(User user, List<Ticket> tickets);
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    public abstract int execute(User user, List<Ticket> tickets);
 }

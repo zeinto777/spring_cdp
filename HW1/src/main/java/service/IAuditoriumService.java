@@ -16,4 +16,5 @@ public interface IAuditoriumService {
     List<Long> getVipSeats(long auditoriumId);
 
     Auditorium getById(long auditoriumId);
+
 }
