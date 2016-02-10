@@ -11,9 +11,7 @@ import service.IAuditoriumService;
 import service.IEventService;
 import service.ISeanceService;
 
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Andrii_Pinchuk on 2/6/2016.
@@ -67,12 +65,16 @@ public class EventService implements IEventService {
         List<Seance> seances = seanceService.getAll();
         for (Seance seance : seances) {
             Event assignEvent = getById(seance.getEventId());
-            DateTime endOfEvent = seance.getDateTime().plus(assignEvent.getDuration().getMillis());
+            DateTime endOfEvent = seance.getDateTime().plus(countDuration(assignEvent));
             if((seance.getAuditoriumId() == auditorium.getId()) && endOfEvent.isAfter(dateTime) ){
                 return result;
             }
         }
         return true;
+    }
+
+    private int countDuration(Event assignEvent) {
+        return assignEvent.getDuration().getHourOfDay()+ assignEvent.getDuration().getHourOfDay();
     }
 
 }

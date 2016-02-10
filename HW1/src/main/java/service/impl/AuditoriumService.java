@@ -2,9 +2,7 @@ package service.impl;
 
 import dao.IAuditoriumDAO;
 import domain.Auditorium;
-import handler.JSONHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import service.IAuditoriumService;
 
@@ -13,7 +11,7 @@ import java.util.List;
 /**
  * Created by Andrii_Pinchuk on 2/6/2016.
  */
-@Service("auditoriumService")
+@Service
 public class AuditoriumService implements IAuditoriumService {
     @Autowired
     private IAuditoriumDAO auditoriumDAO;
@@ -37,6 +35,4 @@ public class AuditoriumService implements IAuditoriumService {
     public Auditorium getById(long auditoriumId) {
         return auditoriumDAO.getById(auditoriumId);
     }
-
-
 }

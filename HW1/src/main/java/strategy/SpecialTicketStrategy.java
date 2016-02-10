@@ -12,8 +12,6 @@ import java.util.List;
 public class SpecialTicketStrategy extends DiscountStrategy {
     private int numberOfLuckyTicket;
 
-
-
     public void setNumberOfLuckyTicket(int numberOfLuckyTicket) {
         this.numberOfLuckyTicket = numberOfLuckyTicket;
     }

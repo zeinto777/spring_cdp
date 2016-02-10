@@ -1,11 +1,7 @@
 package service.impl;
 
-import dao.IEventDAO;
 import dao.ISeanceDAO;
-import domain.Auditorium;
-import domain.Event;
 import domain.Seance;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.ISeanceService;
@@ -22,7 +18,7 @@ public class SeanceService implements ISeanceService {
 
     @Override
     public boolean create(Seance seance) {
-        return false;
+        return seanceDAO.create(seance);
     }
 
     @Override

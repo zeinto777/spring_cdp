@@ -3,11 +3,8 @@ package service.impl;
 import domain.Ticket;
 import domain.User;
 import org.springframework.beans.factory.annotation.Required;
-import org.springframework.stereotype.Service;
 import service.IDiscountService;
 import strategy.DiscountStrategy;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +12,6 @@ import java.util.List;
  */
 
 public class DiscountService implements IDiscountService {
-
     private List<DiscountStrategy> discountStrategies;
 
     @Required

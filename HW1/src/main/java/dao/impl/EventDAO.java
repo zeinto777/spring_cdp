@@ -37,7 +37,6 @@ public class EventDAO implements IEventDAO {
         return events;
     }
 
-
     @Override
     public Event getById(long eventId) {
         Event result = null;

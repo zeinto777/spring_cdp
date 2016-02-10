@@ -25,9 +25,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static util.DateUtil.*;
 
 /**
@@ -52,6 +50,7 @@ public class BookingServiceITTest {
         Event event = new Event(1L, "movie_1", 55, Rating.HIGH, new DateTime(2016, 9, 3, 12, 5, 0, 0));
         userService.register(user);
         eventService.create(event);
+        eventService.assignAuditorium(1L, 4186, new DateTime(2016, 9, 3, 12, 5, 0, 0));
     }
 
     @Test
@@ -117,5 +116,21 @@ public class BookingServiceITTest {
 
         List<Ticket> resultTickets = bookingService.getTicketsByUserId(1l);
         assertArrayEquals(expectedTickets.toArray(), resultTickets.toArray());
+    }
+
+    @Test
+    @Rollback
+    public void testAssignAuditorium_ExpectedFalseIfAuditoriumIsAlreadyBooked() {
+        boolean result = eventService.assignAuditorium(1L, 4186, new DateTime(2016, 9, 3, 12, 5, 0, 0));
+
+        assertFalse(result);
+    }
+
+    @Test
+    @Rollback
+    public void testAssignAuditorium_ExpectedTrueIfAuditoriumIsNotBooked() {
+        boolean result = eventService.assignAuditorium(1L, 4186, new DateTime(2017, 9, 3, 12, 5, 0, 0));
+
+        assertTrue(result);
     }
 }

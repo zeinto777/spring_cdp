@@ -8,7 +8,6 @@ import java.util.Date;
  * Created by Andrii_Pinchuk on 2/6/2016.
  */
 public class Seance {
-
     private long id;
     private long eventId;
     private long auditoriumId;

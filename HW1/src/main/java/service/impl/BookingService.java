@@ -40,8 +40,7 @@ public class BookingService implements IBookingService {
         Event event = eventService.getById(eventId);
         Auditorium auditorium = auditoriumService.getById(auditoriumId);
         int discount = discountService.getDiscount(user, getTicketsByUserId(userId));
-        float d = (100f - discount) / 100;
-        return (long) (bookingDAO.getTicketPrice(auditorium, event, dateTime, seats, user) * d);
+        return (long) (bookingDAO.getTicketPrice(auditorium, event, dateTime, seats, user) * countDiscount(discount));
     }
 
     @Override
@@ -52,5 +51,9 @@ public class BookingService implements IBookingService {
     @Override
     public boolean bookTicket(Ticket ticket) {
         return bookingDAO.bookTicket(ticket);
+    }
+
+    private float countDiscount(int discount) {
+        return (100f - discount) / 100;
     }
 }

@@ -43,5 +43,4 @@ public class UserDAO implements IUserDAO {
         List<User> result = users.stream().filter((user) -> user.getName().equals(name)).collect(Collectors.toList());
         return result;
     }
-
 }

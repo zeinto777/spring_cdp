@@ -2,23 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:c="http://www.springframework.org/schema/c"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-           http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context-3.1.xsd
-           http://www.springframework.org/schema/tx
-           http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
 
     <bean id="birthdayStrategy" class="strategy.BirthdayStrategy" p:discount="${discountForBirthday}"/>
-    <bean id="specialTicketStrategy" class="strategy.SpecialTicketStrategy" p:discount="${discountForLuckyTicket}">
-           <constructor-arg value="10"/>
-            </bean>
+    <bean id="specialTicketStrategy" class="strategy.SpecialTicketStrategy" p:discount="${discountForLuckyTicket}" p:numberOfLuckyTicket="${numberOfLuckyTicket}"/>
 
-    <bean id="someBean" class="service.impl.DiscountService">
+    <bean class="service.impl.DiscountService">
         <property name="discountStrategies">
             <list value-type="strategy.DiscountStrategy">
                 <ref bean="birthdayStrategy"/>

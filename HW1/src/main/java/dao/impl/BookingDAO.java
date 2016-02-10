@@ -3,22 +3,26 @@ package dao.impl;
 import dao.IBookingDAO;
 import domain.*;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
 
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static domain.Rating.*;
+
 /**
  * Created by Andrii_Pinchuk on 2/6/2016.
  */
 @Repository
+@PropertySource("classpath:prepareData.properties")
 public class BookingDAO implements IBookingDAO {
-    private List<Ticket> tickets = new ArrayList<>();
+    private @Value("${coefficientForHighRating}") double coefficientForHighRating;
+    private @Value("${coefficientForVipSeats}") double coefficientForVipSeats;
     private Map<Event, List<Ticket>> purchasedTickets = new HashMap<>();
-    private double COEFFICIENT_FOR_HIGH_RATING = 1.2;
-    private double COEFFICIENT_FOR_VIP_SEATS = 2;
-    private String HIGH = "high";
+    private List<Ticket> tickets = new ArrayList<>();
 
     public List<Ticket> getTickets() {
         return tickets;
@@ -45,8 +49,8 @@ public class BookingDAO implements IBookingDAO {
     @Override
     public long getTicketPrice(Auditorium auditorium, Event event, DateTime dateTime, List<Long> seats, User user) {
         Long price = event.getTicketPrice();
-        if (isEventHaveHighRating(event)) price = (long) (price * COEFFICIENT_FOR_HIGH_RATING);
-        if (isVipSeats(auditorium, seats)) price = (long) (price * COEFFICIENT_FOR_VIP_SEATS);
+        if (isEventHaveHighRating(event)) price = (long) (price * coefficientForHighRating);
+        if (isVipSeats(auditorium, seats)) price = (long) (price * coefficientForVipSeats);
         return price;
     }
 
@@ -60,8 +64,7 @@ public class BookingDAO implements IBookingDAO {
         return vip_seats.containsAll(seats);
     }
 
-
     private boolean isEventHaveHighRating(Event event) {
-        return (event.getRating().getValue().equals(HIGH)) ? true : false;
+        return (event.getRating().getValue().equals(HIGH.getValue())) ? true : false;
     }
 }
