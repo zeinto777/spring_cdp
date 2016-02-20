@@ -23,11 +23,10 @@ public class DiscountAspect {
     @After("execution(* strategy.BirthdayStrategy.execute(..))")
     public void adviceUserDiscount(JoinPoint joinPoint) {
         User user = (User) joinPoint.getArgs()[0];
-        Map<String, Integer> associatedEvents;
-        associatedEvents = !counters.containsKey(user.getId()) ? new HashMap<>() : counters.get(user.getId());
-        Integer count = associatedEvents.containsKey(BIRTHDAY) ? associatedEvents.get(BIRTHDAY) + 1 : 0;
-        associatedEvents.put(BIRTHDAY, count);
-        counters.put(user.getId(), associatedEvents);
+        Map<String, Integer> associatedEvents = counters.getOrDefault(user.getId(), new HashMap<>());
+        Integer count = associatedEvents.getOrDefault(BIRTHDAY, 0);
+        associatedEvents.put(BIRTHDAY, count + 1);
+        counters.putIfAbsent(user.getId(), associatedEvents);
     }
 
 

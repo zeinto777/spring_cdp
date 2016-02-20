@@ -26,33 +26,24 @@ public class CounterAspect {
             pointcut = "execution(* service.IEventService.getByName(..))",
             returning = "result")
     public void adviceGetEventByName(List<Event> result) {
-        if (result.isEmpty()) return;
-        Map<String, Integer> associatedEvents;
-        for (Event event : result) {
-            associatedEvents = !counters.containsKey(event.getId()) ? new HashMap<>() : counters.get(event.getId());
-            Integer count = associatedEvents.containsKey(GET_EVENT_BY_NAME) ? associatedEvents.get(GET_EVENT_BY_NAME) + 1 : 0;
-            associatedEvents.put(GET_EVENT_BY_NAME, count);
-            counters.put(event.getId(), associatedEvents);
-        }
+        result.forEach(event -> scalingAmountOfEvent(GET_EVENT_BY_NAME, event.getId()));
     }
 
     @After("execution(* service.IBookingService.bookTicket(..)) && args(ticket) ")
     public void adviceGetBookTicket(Ticket ticket) {
-        Map<String, Integer> associatedEvents;
-        associatedEvents = !counters.containsKey(ticket.getEventId()) ? new HashMap<>() : counters.get(ticket.getEventId());
-        Integer count = associatedEvents.containsKey(BOOKED_TICKET) ? associatedEvents.get(BOOKED_TICKET) + 1 : 0;
-        associatedEvents.put(BOOKED_TICKET, count);
-        counters.put(ticket.getEventId(), associatedEvents);
+        scalingAmountOfEvent(BOOKED_TICKET, ticket.getEventId());
     }
-
 
     @After("execution(* service.IBookingService.getTicketPrice(..)) ")
     public void adviceGetTicketPrice(JoinPoint joinPoint) {
-        long eventId = Long.valueOf((Long) joinPoint.getArgs()[1]);
-        Map<String, Integer> associatedEvents;
-        associatedEvents = !counters.containsKey(eventId) ? new HashMap<>() : counters.get(eventId);
-        Integer count = associatedEvents.containsKey(GET_TICKET_PRICE) ? associatedEvents.get(GET_TICKET_PRICE) + 1 : 0;
-        associatedEvents.put(GET_TICKET_PRICE, count);
-        counters.put(eventId, associatedEvents);
+        scalingAmountOfEvent(GET_TICKET_PRICE, Long.valueOf((Long) joinPoint.getArgs()[1]));
+    }
+
+
+    private void scalingAmountOfEvent(String eventName, Long eventId) {
+        Map<String, Integer> associatedEvents = counters.getOrDefault(eventId, new HashMap<>());
+        Integer count = associatedEvents.getOrDefault(eventName, 0);
+        associatedEvents.put(eventName, count + 1);
+        counters.putIfAbsent(eventId, associatedEvents);
     }
 }
