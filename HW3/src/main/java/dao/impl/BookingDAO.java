@@ -40,18 +40,9 @@ public class BookingDAO implements IBookingDAO {
     private static final Logger LOG = LoggerFactory.getLogger(BookingDAO.class);
     private static final String GET_ALL = "SELECT * FROM tickets";
     private static final String GET_TICKET_BY_ID = "SELECT * FROM tickets WHERE userId=?";
-
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
-    }
-
-    @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-    
     public Ticket bookTicket(Ticket ticket) {
         LOG.debug(String.format("Book ticket. Ticket - %s", ticket));
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);

@@ -1,16 +1,16 @@
 package aspects;
 
+import dao.impl.CounterAspectDAO;
 import domain.Event;
 import domain.Ticket;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static constants.Constants.*;
 
@@ -20,7 +20,8 @@ import static constants.Constants.*;
 @Aspect
 @Component
 public class CounterAspect {
-    private Map<Long, Map<String, Integer>> counters = new HashMap<>();
+    @Autowired
+    CounterAspectDAO counterAspectDAO;
 
     @AfterReturning(
             pointcut = "execution(* service.IEventService.getByName(..))",
@@ -39,11 +40,10 @@ public class CounterAspect {
         scalingAmountOfEvent(GET_TICKET_PRICE, Long.valueOf((Long) joinPoint.getArgs()[1]));
     }
 
-
     private void scalingAmountOfEvent(String eventName, Long eventId) {
-        Map<String, Integer> associatedEvents = counters.getOrDefault(eventId, new HashMap<>());
-        Integer count = associatedEvents.getOrDefault(eventName, 0);
-        associatedEvents.put(eventName, count + 1);
-        counters.putIfAbsent(eventId, associatedEvents);
+        counterAspectDAO.update(eventName, eventId);
     }
+
+
+
 }

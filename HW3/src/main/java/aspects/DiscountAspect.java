@@ -1,10 +1,12 @@
 package aspects;
 
+import dao.impl.DiscountAspectDAO;
 import domain.Ticket;
 import domain.User;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -18,16 +20,12 @@ import static constants.Constants.BIRTHDAY;
 @Aspect
 @Component
 public class DiscountAspect {
-    private Map<Long, Map<String, Integer>> counters = new HashMap<>();
+    @Autowired
+    DiscountAspectDAO discountAspectDAO;
 
     @After("execution(* strategy.BirthdayStrategy.execute(..))")
     public void adviceUserDiscount(JoinPoint joinPoint) {
         User user = (User) joinPoint.getArgs()[0];
-        Map<String, Integer> associatedEvents = counters.getOrDefault(user.getId(), new HashMap<>());
-        Integer count = associatedEvents.getOrDefault(BIRTHDAY, 0);
-        associatedEvents.put(BIRTHDAY, count + 1);
-        counters.putIfAbsent(user.getId(), associatedEvents);
+        discountAspectDAO.update(BIRTHDAY, user.getId());
     }
-
-
 }

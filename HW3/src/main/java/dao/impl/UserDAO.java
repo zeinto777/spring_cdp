@@ -29,17 +29,8 @@ public class UserDAO implements IUserDAO {
     private static final String GET_USERS_BY_NAME = "SELECT * FROM users WHERE name=?";
     private static final String GET_USERS_BY_EMAIL = "SELECT * FROM users WHERE email=?";
     private static final String DELETE_USER = "DELETE FROM users WHERE id=?";
-
-    private JdbcTemplate jdbcTemplate;
-
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
-    }
     @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public User register(User user) {

@@ -30,16 +30,8 @@ public class EventDAO implements IEventDAO {
     private static final String GET_EVENTS_ALL = "SELECT * FROM events";
     private static final String GET_EVENTS_BY_NAME = "SELECT * FROM events WHERE name LIKE ?";
     private static final String DELETE_EVENT = "DELETE FROM events WHERE id=?";
-    private JdbcTemplate jdbcTemplate;
-
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
-    }
-
     @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public boolean create(Event event) {

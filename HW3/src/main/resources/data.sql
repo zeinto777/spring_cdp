@@ -2,6 +2,8 @@ CREATE DATABASE IF NOT EXISTS spring_cdp;
 
 use spring_cdp;
 
+DROP TABLE IF EXISTS event_counter;
+DROP TABLE IF EXISTS user_counter;
 DROP TABLE IF EXISTS tickets;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS seances;
@@ -47,6 +49,20 @@ CREATE TABLE tickets(
 	seats VARCHAR(255) NOT NULL,
 	FOREIGN KEY (userId) REFERENCES users(id),
 	FOREIGN KEY (eventId) REFERENCES events(id)
+);
+
+CREATE TABLE event_counter(
+    eventId BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	getEventByName BIGINT NOT NULL,
+	getTicketPrice BIGINT NOT NULL,
+	bookedTicket BIGINT NOT NULL,
+	FOREIGN KEY (eventId) REFERENCES events(id)
+);
+
+CREATE TABLE user_counter(
+    userId BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	birthday BIGINT NOT NULL,
+	FOREIGN KEY (userId) REFERENCES users(id)
 );
 
 INSERT INTO `users` (`id`, `name`, `email`, `birthday`) VALUES

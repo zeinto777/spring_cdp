@@ -33,8 +33,6 @@
     <context:component-scan base-package="dao.impl"/>
     <context:component-scan base-package="aspects"/>
 
-    <bean id="handler" class="handler.JSONHandler" p:filename="${data.file}"/>
-
     <bean id="birthdayStrategy" class="strategy.BirthdayStrategy" p:discount="${discountForBirthday}"/>
     <bean id="specialTicketStrategy" class="strategy.SpecialTicketStrategy" p:discount="${discountForLuckyTicket}" p:numberOfLuckyTicket="${numberOfLuckyTicket}"/>
 

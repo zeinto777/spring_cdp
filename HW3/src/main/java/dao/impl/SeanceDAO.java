@@ -29,17 +29,8 @@ public class SeanceDAO implements ISeanceDAO {
     private static final Logger LOG = LoggerFactory.getLogger(SeanceDAO.class);
     private static final String DELETE_SEANCE = "DELETE FROM seances WHERE id=?";
     private static final String GET_ALL = "SELECT * FROM seances";
-    private JdbcTemplate jdbcTemplate;
-
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
-    }
-
     @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public boolean create(Seance seance) {

@@ -43,6 +43,4 @@
     <context:component-scan base-package="dao.impl"/>
     <context:component-scan base-package="aspects"/>
 
-
-    <bean id="handler" class="handler.JSONHandler" p:filename="${data.file}"/>
 </beans>

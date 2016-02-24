@@ -25,16 +25,8 @@ public class AuditoriumDAO implements IAuditoriumDAO {
     private static final Logger LOG = LoggerFactory.getLogger(AuditoriumDAO.class);
     private static final String GET_ALL = "SELECT * FROM auditoriums";
     private static final String GET_AUDITORIUM_BY_ID = "SELECT * FROM auditoriums WHERE id=?";
-    private JdbcTemplate jdbcTemplate;
-
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
-    }
-
     @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public List<Auditorium> getAuditoriums() {

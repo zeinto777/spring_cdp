@@ -15,10 +15,10 @@ import service.IEventService;
 @Aspect
 @Component
 public class LuckyWinnerAspect {
-    private static float randomFactor;
-
     @Autowired
     private IEventService eventService;
+
+    private static float randomFactor;
 
     public void setRandomFactor(float randomFactor) {
         this.randomFactor = randomFactor;
