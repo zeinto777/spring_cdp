@@ -1,0 +1,5 @@
+#if($userAccount)
+<h1>User Account</h1>
+<p>Money: ${userAccount.prepaidMoney}</p>
+<p>UserId: ${userAccount.userId}</p>
+#end

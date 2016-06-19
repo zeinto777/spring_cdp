@@ -1,0 +1,17 @@
+#if($event)
+<h1>Event</h1>
+<p>Title: ${event.title}</p>
+<p>Date: ${event.date}</p>
+<p>Ticket price: ${event.ticketPrice}</p>
+#end
+
+
+#if($events)
+<h2>List of Events</h2>
+    #foreach($event in $events.events)
+       <p>Title: ${event.title}</p>
+       <p>Date: ${event.date}</p>
+       <p>Ticket price: ${event.ticketPrice}</p>
+       <br>
+    #end
+#end

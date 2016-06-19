@@ -1,0 +1,38 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+
+    <http auto-config="true" use-expressions="true" authentication-manager-ref="authenticationManager">
+        <intercept-url pattern="/user/**" access="hasAnyRole('REGISTERED_USER,BOOKING_MANAGER')" />
+        <intercept-url pattern="/event/**" access="hasAnyRole('REGISTERED_USER,BOOKING_MANAGER')" />
+        <intercept-url pattern="/userAccount/**" access="hasAnyRole('REGISTERED_USER,BOOKING_MANAGER')" />
+        <intercept-url pattern="/ticket/getByEvent" access="hasAnyRole('BOOKING_MANAGER')" />
+        <intercept-url pattern="/ticket/**" access="hasAnyRole('REGISTERED_USER,BOOKING_MANAGER')" />
+
+        <form-login
+                login-page="/login"
+                authentication-failure-url="/login?error"
+                username-parameter="username"
+                password-parameter="password" />
+        <logout logout-success-url="/login?logout" />
+
+        <remember-me
+                token-validity-seconds="1209600"
+                remember-me-parameter="remember-me"
+                data-source-ref="dataSource" />
+    </http>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider>
+            <password-encoder hash="bcrypt" />
+            <jdbc-user-service data-source-ref="dataSource"
+                               users-by-username-query="select username,password,enabled from users where username= ?"
+                               authorities-by-username-query="select u.username,ur.role from users u, user_roles ur where u.id=ur.user_id and u.username = ?" />
+        </authentication-provider>
+    </authentication-manager>
+</beans:beans>
