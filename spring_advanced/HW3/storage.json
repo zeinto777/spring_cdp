@@ -1,0 +1,24 @@
+{
+  "event:4186": {
+    "id": 4186,
+    "title": "Title_4186",
+    "date": "Nov 17, 2015 5:46:59 PM"
+  },
+  "user:32929": {
+    "id": 32929,
+    "name": "Andrii Pinchuk",
+    "email": "Andrii_Pinchuk@epam.com"
+  },
+   "userAccount:565": {
+    "id": 565,
+    "userId": 32929,
+    "prepaidMoney": 5
+  },
+  "ticket:215025": {
+    "id": 215025,
+    "eventId": 4186,
+    "userId": 32929,
+    "category": "PREMIUM",
+    "place": 1
+  }
+}  

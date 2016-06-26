@@ -1,0 +1,5 @@
+<p>Problem found</p>
+<hr>
+
+<p>Controller: ${handler}</p>
+<p>Exception: ${error}</p>

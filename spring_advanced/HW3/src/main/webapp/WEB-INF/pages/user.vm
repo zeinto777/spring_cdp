@@ -1,0 +1,12 @@
+#if($user)
+<h1>User</h1>
+<h2>Hello ${user.name}</h2>
+<p>${user.email}</p>
+#end
+
+#if($users)
+<h2>List of Users with name $user_name</h2>
+    #foreach($user in $users.users)
+        <li><a href="spring-web/user/get?id=${user.id}">${user.email}</a></li>
+    #end
+#end
